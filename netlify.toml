@@ -3,4 +3,4 @@
     command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
 
     [build.environment]
-        HUGO_VERSION = "0.104.2"
+        HUGO_VERSION = "0.115.4"

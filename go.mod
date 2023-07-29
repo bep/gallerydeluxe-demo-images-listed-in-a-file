@@ -1,4 +1,4 @@
-module github.com/bep/gallerydeluxe_starter
+module github.com/bep/gallerydeluxe-demo-images-listed-in-a-file
 
 go 1.19
 

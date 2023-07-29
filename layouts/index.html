@@ -15,11 +15,19 @@
     {{ partial "logo.html" . }}
   </a>
 
-  {{/* init.hmlt takes either a slice of .images or a .sourcePath that points to a bundle with images.
-    An .id will be calculated if not provided. This will be used to create the URL to the data file.
-  */}}
   {{ $bundle := site.GetPage "images" }}
-  {{ $images := $bundle.Resources.ByType "image" }}
+  {{ $imagesList := $bundle.Resources.GetMatch "images.txt" }}
+  {{ $imagesURLs := split $imagesList.Content "\n" }}
+  {{ $images := slice }}
+  {{ range $imagesURLs }}
+    {{ with resources.GetRemote . }}
+      {{ with .Err }}
+        {{ warnf "%s" . }}
+      {{ else }}
+        {{ $images = $images | append . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
   {{ $gallery := partial "gallerydeluxe/init.html" (dict "images" $images) }}
   {{ $params := site.Params.gallerydeluxe }}
   {{/* We currently only support 1 gallery per page, which is create4 by an element with id 'gallerydeluxe',
